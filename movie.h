@@ -11,15 +11,16 @@ class movieBST {
 		movieBST();
 		~movieBST();
 		bool insert (string title, double rating);
-		string getTitle() const;
-		double getRating() const;
-		bool find(string t) const;
-		bool findPre(string p) const;
+		void printNode(Node* n);
+		Node* find(string t) const;
+		void findPre(string p) const;
 		bool findHighRating(string p) const;
 	private:
 		Node *root;
 		void clear(Node* n);
-		bool insert (string title, double rating, int depth, Node* n);
+		Node* find(string t, Node* n) const;
+		bool insert (string title, double rating, int depth, Node* n) const;
+		void findPre(string p, int len, Node* n) const;
 		struct Node {
 			string title;
 			double rating;
