@@ -43,4 +43,18 @@ bool movieBST::insert(string title, double rating, int depth, Node* n) {
 		if (n->left) {return insert(title, rating, depth, n->left);}
 		else {
 			n->left = new Node(title, rating, depth);
+			n->left->parent = n;
+			return true;
+		}
+	}
+	else {
+		depth++;
+		if (n->right) {return insert(title, rating, depth, n->right);}
+		else {
+			n->right = new Node(title, rating, depth);
+			n->right->parent = n;
+			return true;
+		}
+	}
+}
 
