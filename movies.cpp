@@ -2,7 +2,7 @@
 // 5/24/2020
 
 
-#include"moviebst.h"
+#include"movies.h"
 #include<iostream>
 #include<string>
 
@@ -27,7 +27,7 @@ void movieBST::clear(Node* n) {
 
 //insert movie into tree
 bool movieBST::insert(string title, double rating) {
-	int depth = 1;
+	int depth = 0;
 	if (!root) {
 		root = new Node(title, rating, depth);
 		return true;
@@ -38,7 +38,7 @@ bool movieBST::insert(string title, double rating) {
 //insert helper function
 bool movieBST::insert(string title, double rating, int depth, Node* n) {
 	if (title == n->title) {return false;}
-	if (title < n->info) {
+	if (title < n->title) {
 		depth++;
 		if (n->left) {return insert(title, rating, depth, n->left);}
 		else {
@@ -58,13 +58,14 @@ bool movieBST::insert(string title, double rating, int depth, Node* n) {
 	}
 }
 //print a movie node
-void moviesBST::printNode(Node* n) {
+void movieBST::printNode(Node* n) const {
 	cout << n->title << ", " << n->rating << ", " << n->depth << endl;
 }
 
 //find a movie in BST
-movieBST::Node* movieBST::find(string t) const {
-	return find(t, root);
+bool movieBST::find(string t) const {
+	if (find(t, root) != NULL) {return true;}
+	return false;
 }
 
 //find helper function
@@ -79,29 +80,35 @@ movieBST::Node* movieBST::find(string t, Node* n) const {
 
 //find movie with the given prefix
 void movieBST::findPre(string p) const {
-	len = p.length - 1;
-	findPre(strint p, int len, root);
+	findPre(p, root);
 	cout << endl;
 }
 
 //findPre helper function
-void moviesBST::findPre(string p, int len, Node* n) const {
+void movieBST::findPre(string p, Node* n) const {
 	if (n) {
 		printNode(n);
-		if (n->title.substr(0,len) == p) {return;}
-		findPre(string p, n->left);
-		findPre(string p, n->right);
+		if (n->title.substr(0,(p.length()-1)) == p) {return;}
+		findPre(p, n->left);
+		findPre(p, n->right);
 	}
 }
 
 //find movie with given prefix with the highest rating
-movieBST::Node* movieBST::findHighRating(string p) const {
-	double highest = 0.0;
-	return findHighRating(p, highest, root);
+bool movieBST::findHighRating(string p) {
+	Node* highest = new Node;
+	highest = findHighRating(p, highest, root);
+	cout << "Best movie is " << highest->title << " with rating " << highest->rating << endl;
+	if (highest != NULL) {return true;}
+	return false;
 }
 
 //findHighRating helper function
-movieBST::Node* movieBST::findHighRating(string p, int highest, Node* n) const {
-	//create new BST of all the movies with the prefix p,
-	//then find the node with the highest rating and print that
+movieBST::Node* movieBST::findHighRating(string p, Node* highest, Node* n) {
+	if (n) {
+		if ((n->title.substr(0,(p.length()-1)) == p) && (n->rating > highest->rating)) {highest = n;}
+                findHighRating(p, highest, n->left);
+		findHighRating(p, highest, n->right);
+        }
+	return highest;
 }
