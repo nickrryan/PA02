@@ -27,14 +27,20 @@ void movieBST::clear(Node* n) {
 
 //insert movie into tree
 bool movieBST::insert(string title, double rating) {
+	int depth = 1;
 	if (!root) {
-		root = new Node(title, rating);
+		root = new Node(title, rating, depth);
 		return true;
 	}
-	return insert(title, rating, root);
+	return insert(title, rating, depth, root);
 }
 
 //insert helper function
-bool movieBST::insert(string title, double rating, Node* n) {
-	if ((title == n->title) && (rating == n->rating)) {return false;}
-	if 
+bool movieBST::insert(string title, double rating, int depth, Node* n) {
+	if (title == n->title) {return false;}
+	if (title < n->info) {
+		depth++;
+		if (n->left) {return insert(title, rating, depth, n->left);}
+		else {
+			n->left = new Node(title, rating, depth);
+

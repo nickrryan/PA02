@@ -18,10 +18,13 @@ class movieBST {
 		bool findHighRating(string p) const;
 	private:
 		Node *root;
+		void clear(Node* n);
+		bool insert (string title, double rating, int depth, Node* n);
 		struct Node {
 			string title;
 			double rating;
+			int depth;
 			Node *left, *right, *parent;
-			Node(string s = "", double r = 0.0) : title(s), rating(r), left(0), right(0), parent(0) { }
+			Node(string s = "", double r = 0.0, int d = 0) : title(s), rating(r), depth(d), left(0), right(0), parent(0) { }
 		};
 };
