@@ -81,7 +81,7 @@ movieBST::Node* movieBST::find(string t, Node* n) const {
 
 //return the depth of a node
 int movieBST::getDepth(string t) const {
-        return ((find(t, root))->depth) + 1;
+        return ((find(t, root))->depth);
 }
 
 //find movie with the given prefix and print all movies on path
@@ -111,11 +111,13 @@ bool movieBST::findHighRating(string p) {
 movieBST::Node* movieBST::findHighRating(string p, Node* highest, Node* n) { 
 	if (n) {
 		Node* next = find(p, n);
-		if (next->left == NULL) {
+		if ((next->left == NULL) && (next->right == NULL)) {
 			if (highest == NULL) {highest = next;}
 			else if (next->rating > highest->rating) {highest = next;}
-			next = find(p, next->parent->right);
-		}
+			Node* parend = next->parent;
+			while(parend->title.substr(0, p.length()) < p) {parend = parend->parent;}
+			next = find(p, parend->right);
+		}  
 		if (next != NULL) {
 			if (highest == NULL) {highest = next;}
 			else if (next->rating > highest->rating) {highest = next;}

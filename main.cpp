@@ -50,7 +50,7 @@ int main(int argc, char** argv){
 
   if (flag == false) {
 	movieBST movies1;
-	int numN = 1;
+	int numN = 0;
 	ofstream ofs;
 	ofs.open("pa02_graph.csv");
 	while (getline (movieFile, line) && parseLine(line, movieName, movieRating)){
@@ -67,6 +67,7 @@ int main(int argc, char** argv){
 	auto duration = duration_cast<nanoseconds>(stop - start);
 	double avgDuration = (duration.count() / W);
 	cout << "Average Duration: " << avgDuration << " nanoseconds" << endl;
+	ofs.close();
 
   }
 

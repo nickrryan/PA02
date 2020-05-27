@@ -67,8 +67,8 @@ void tests_getDepth() {
         movies3.insert("the godfather", 8.0);
         movies3.insert("casablanca", 7.9);
  	movies3.insert("citizen kane", 7.8);
-        assertEquals(1, movies3.getDepth("the godfather"), "should find");
-        assertEquals(3, movies3.getDepth("citizen kane"), "should find");
+        assertEquals(0, movies3.getDepth("the godfather"), "should find");
+        assertEquals(2, movies3.getDepth("citizen kane"), "should find");
         END_TEST(testName);
 }
 
