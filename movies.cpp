@@ -81,7 +81,7 @@ movieBST::Node* movieBST::find(string t, Node* n) const {
 
 //return the depth of a node
 int movieBST::getDepth(string t) const {
-        return (find(t, root))->depth;
+        return ((find(t, root))->depth) + 1;
 }
 
 //find movie with the given prefix and print all movies on path

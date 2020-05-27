@@ -18,6 +18,7 @@ void runAll() {
         tests_insert();
         tests_find();
         tests_findHighRating();
+	tests_getDepth();
 }
 
 void tests_insert() {
@@ -59,5 +60,15 @@ void tests_findHighRating() {
         END_TEST(testName);
 }
 
-
+void tests_getDepth() {
+        const string testName = "tests_getDepth";
+        START_TEST(testName);
+        movieBST movies3;
+        movies3.insert("the godfather", 8.0);
+        movies3.insert("casablanca", 7.9);
+ 	movies3.insert("citizen kane", 7.8);
+        assertEquals(1, movies3.getDepth("the godfather"), "should find");
+        assertEquals(3, movies3.getDepth("citizen kane"), "should find");
+        END_TEST(testName);
+}
 
