@@ -111,9 +111,14 @@ bool movieBST::findHighRating(string p) {
 movieBST::Node* movieBST::findHighRating(string p, Node* highest, Node* n) { 
 	if (n) {
 		Node* next = find(p, n);
+		if (next->left == NULL) {
+			if (highest == NULL) {highest = next;}
+			else if (next->rating > highest->rating) {highest = next;}
+			next = find(p, next->parent->right);
+		}
 		if (next != NULL) {
 			if (highest == NULL) {highest = next;}
-			else if (n->rating > highest->rating) {highest = next;}
+			else if (next->rating > highest->rating) {highest = next;}
 			Node* left = find(p, next->left);
 			Node* right = find(p, next->right);
 			if (left != NULL) {return findHighRating(p, highest, left);}
