@@ -2,11 +2,14 @@
 #include <fstream>
 #include <string>
 #include <ctime>
+#include <cstdlib>
 #include <vector>
 #include <cstring>
 #include <algorithm>
 #include "movies.h"
+#include <chrono>
 
+using namespace std::chrono;
 using namespace std;
 
 bool parseLine(string &line, string &movieName, double &movieRating);
@@ -36,24 +39,38 @@ int main(int argc, char** argv){
     exit(1);
   }
 
-  // Create an objects of the BST class you defined 
-  // to contain the name and rating in the input file
-  movieBST movies1;
-
-  // Read each file and store the name and rating
-  while (getline (movieFile, line) && parseLine(line, movieName, movieRating)){
-    // Use std::string movieName and double movieRating
-    // to construct your Movie objects
-    movies1.insert(movieName, movieRating); 
-    //cout << movieName << " has rating " << movieRating << endl;
+  if (flag == true) {
+	movieBST movies1;
+	while (getline (movieFile, line) && parseLine(line, movieName, movieRating)){
+		movies1.insert(movieName, movieRating);
+	}
+	movies1.findPre(argv[3]);
+	movies1.findHighRating(argv[3]);
   }
+
+  if (flag == false) {
+	movieBST movies1;
+	int numN = 1;
+	ofstream ofs;
+	ofs.open("pa02_graph.csv");
+	while (getline (movieFile, line) && parseLine(line, movieName, movieRating)){
+		movies1.insert(movieName, movieRating);
+		ofs << numN << "," << movies1.getDepth(movieName) << endl;
+		numN++;
+	}
+	double W = atof(argv[3]);
+	auto start = high_resolution_clock::now();
+	for (int i = 0; i < W; i++) {
+		while (getline (movieFile, line) && parseLine(line, movieName, movieRating)) {movies1.find(movieName);}
+	}
+	auto stop = high_resolution_clock::now();
+	auto duration = duration_cast<nanoseconds>(stop - start);
+	double avgDuration = (duration.count() / W);
+	cout << "Average Duration: " << avgDuration << " nanoseconds" << endl;
+
+  }
+
   movieFile.close();
-  
-  if (argv[3]) {
-	  movies1.findPre(argv[3]);
-	  movies1.findHighRating(argv[3]);
-  }
-
   return 0;
 }
 

@@ -71,7 +71,7 @@ bool movieBST::find(string t) const {
 //find helper function
 movieBST::Node* movieBST::find(string t, Node* n) const {
 	if (n) {
-		string sub = n->title.substr(0, (t.length()-1));
+		string sub = n->title.substr(0, t.length());
 		if (sub == t) {return n;}
 		else if (t < sub) {return find(t, n->left);}
 		else {return find(t, n->right);}
@@ -79,7 +79,12 @@ movieBST::Node* movieBST::find(string t, Node* n) const {
 	return NULL;
 }
 
-//find movie with the given prefix
+//return the depth of a node
+int movieBST::getDepth(string t) const {
+        return (find(t, root))->depth;
+}
+
+//find movie with the given prefix and print all movies on path
 void movieBST::findPre(string p) const {
 	findPre(p, root);
 	cout << endl;
@@ -89,7 +94,7 @@ void movieBST::findPre(string p) const {
 void movieBST::findPre(string p, Node* n) const {
 	if (n) {
 		printNode(n);
-		if (n->title.substr(0,(p.length()-1)) == p) {return;}
+		if (n->title.substr(0,p.length()) == p) {return;}
 		findPre(p, n->left);
 		findPre(p, n->right);
 	}
@@ -98,7 +103,6 @@ void movieBST::findPre(string p, Node* n) const {
 //find movie with given prefix with the highest rating
 bool movieBST::findHighRating(string p) {
 	Node* highest = findHighRating(p, NULL, root);
-	//cout << highest->title << endl;
 	if (highest == NULL) {return false;}
 	cout << "Best movie is " << highest->title << " with rating " << highest->rating << endl;
 	return true;
@@ -109,8 +113,8 @@ movieBST::Node* movieBST::findHighRating(string p, Node* highest, Node* n) {
 	if (n) {
 		Node* next = find(p, n);
 		if (next != NULL) {
-			if (highest == NULL) {highest = n;}
-			else if (n->rating > highest->rating) {highest = n;}
+			if (highest == NULL) {highest = next;}
+			else if (n->rating > highest->rating) {highest = next;}
 			Node* left = find(p, next->left);
 			Node* right = find(p, next->right);
 			if (left != NULL) {return findHighRating(p, highest, left);}

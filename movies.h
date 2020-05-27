@@ -18,6 +18,7 @@ class movieBST {
 		bool find(string t) const;
 		void findPre(string p) const;
 		bool findHighRating(string p);
+		int getDepth(string t) const;
 	private:
 		struct Node {
                         string title;
