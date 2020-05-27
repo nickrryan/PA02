@@ -16,7 +16,7 @@ class movieBST {
 		~movieBST();
 		bool insert (string title, double rating);
 		bool find(string t) const;
-		void findPre(string p) const;
+		void printPre() const;
 		bool findHighRating(string p);
 		int getDepth(string t) const;
 	private:
@@ -32,7 +32,7 @@ class movieBST {
 		void clear(Node* n);
 		Node* find(string t, Node* n) const;
 		bool insert (string title, double rating, int depth, Node* n);	
-		void findPre(string p, Node* n) const;
+		void printPre(Node* n) const;
 		Node* findHighRating(string p, Node* highest, Node* n); 
 };
 

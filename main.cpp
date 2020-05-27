@@ -44,7 +44,7 @@ int main(int argc, char** argv){
 	while (getline (movieFile, line) && parseLine(line, movieName, movieRating)){
 		movies1.insert(movieName, movieRating);
 	}
-	movies1.findPre(argv[3]);
+	movies1.printPre();
 	movies1.findHighRating(argv[3]);
   }
 

@@ -85,19 +85,17 @@ int movieBST::getDepth(string t) const {
 }
 
 //find movie with the given prefix and print all movies on path
-void movieBST::findPre(string p) const {
-	findPre(p, root);
+void movieBST::printPre() const {
+	printPre(root);
 	cout << endl;
 }
 
 //findPre helper function
-void movieBST::findPre(string p, Node* n) const {
+void movieBST::printPre(Node* n) const {
 	if (n) {
 		printNode(n);
-		string sub = n->title.substr(0, p.length());
-                if (sub == p) {return;}
-                else if (p < sub) {find(p, n->left);}
-                else {find(p, n->right);}
+                printPre(n->left);
+                printPre(n->right);
 	}
 }
 
