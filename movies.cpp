@@ -94,9 +94,10 @@ void movieBST::findPre(string p) const {
 void movieBST::findPre(string p, Node* n) const {
 	if (n) {
 		printNode(n);
-		if (n->title.substr(0,p.length()) == p) {return;}
-		findPre(p, n->left);
-		findPre(p, n->right);
+		string sub = n->title.substr(0, p.length());
+                if (sub == p) {return;}
+                else if (p < sub) {find(p, n->left);}
+                else {find(p, n->right);}
 	}
 }
 
