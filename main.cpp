@@ -59,14 +59,22 @@ int main(int argc, char** argv){
 		numN++;
 	}
 	double W = atof(argv[3]);
-	auto start = high_resolution_clock::now();
+	double min = 1000000000.0;
+	double max = 0.0;
+	double totalduration = 0.0;
 	for (int i = 0; i < W; i++) {
+		auto start = high_resolution_clock::now();
 		while (getline (movieFile, line) && parseLine(line, movieName, movieRating)) {movies1.find(movieName);}
+		auto stop = high_resolution_clock::now();
+		auto duration = duration_cast<nanoseconds>(stop - start);
+		totalduration += duration.count();
+		if (duration.count() < min) {min = duration.count();}
+		if (duration.count() > max) {max = duration.count();}
 	}
-	auto stop = high_resolution_clock::now();
-	auto duration = duration_cast<nanoseconds>(stop - start);
-	double avgDuration = (duration.count() / W);
+	double avgDuration = (totalduration / W);
+	cout << "Minimum Duration: " << min << " nanoseconds" << endl;
 	cout << "Average Duration: " << avgDuration << " nanoseconds" << endl;
+	cout << "Maximum Duration: " << max << " nanoseconds" << endl;
 	ofs.close();
 
   }
